@@ -13,6 +13,78 @@ WIN_COMBINATIONS = [
 [6,4,2] # right_diagonal
 ]
 
+#build structure of the board
+puts board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+
+#display_board method
+def display_board
+   puts row = ["   " "|" "   " "|" "   "]
+   puts separator = "-----------"
+   puts row
+   puts separator
+   puts row
+ end
+
+#board and position
+def display_board(board)
+   puts " #{board[0]} | #{board[1]} | #{board[2]} "
+   puts "-----------"
+   puts " #{board[3]} | #{board[4]} | #{board[5]} "
+   puts "-----------"
+   puts " #{board[6]} | #{board[7]} | #{board[8]} "
+end
+
+#change player input in to integer
+def input_to_index(user_input)
+   user_input.to_i - 1
+end
+
+#move
+def move(board, index, player)
+   board[index] = player
+end
+
+def position_taken? (board, index)
+  !(board[index].nil? || board[index] == " ")
+end
+
+#turn
+def turn(board)
+  puts "Please enter 1-9:"
+  #get the user input
+  user_input = gets.strip
+  #input to index
+  index = input_to_index(user_input)
+  token = current_player(board)
+
+#check for validation
+  if valid_move?(board,index)
+    puts 'valid move'
+    move(board, index, token)
+    display_board(board)
+   else
+    puts 'try again'
+    turn(board)
+  end
+  display_board(board)
+end
+
+#counts occupied positions
+def turn_count(board)
+   counter = 0
+   board.each do |spaces|
+      if spaces == "X" || spaces == "O"
+         counter += 1
+      end
+   end
+   counter
+end
+
+#define current player
+def current_player(board)
+   turn_count(board) % 2 == 0 ? "X" : "O"
+end
+
 #winning combo
 def won?(board)
     WIN_COMBINATIONS.each do |win_combination|
@@ -59,4 +131,25 @@ def winner(board)
    if won?(board)
       return board[won?(board)[0]]
    end
+end
+
+#asks for players input on a turn of the game
+def play(board)
+   counter = 0
+   until counter == 9
+     turn(board)
+     counter += 1
+   end
+end
+
+def play(board)
+  until over?(board)
+    turn(board) 
+  end
+  if won?(board)
+    winner(board) == "X" || winner(board) == "O"
+    puts "Congratulations #{winner(board)}!"
+  else draw?(board)
+    puts "Cat\'s Game!"
+  end
 end

@@ -144,7 +144,7 @@ end
 
 def play(board)
   until over?(board)
-    turn(board) 
+    turn(board)
   end
   if won?(board)
     winner(board) == "X" || winner(board) == "O"

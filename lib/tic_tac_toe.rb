@@ -36,12 +36,11 @@ end
 
 #change player input in to integer
 def input_to_index(user_input)
-   user_input.to_i - 1
+  user_input.to_i - 1
 end
 
-#move
-def move(board, index, player)
-   board[index] = player
+def player_move(board, index, marker)
+ board[index] = marker
 end
 
 def position_taken? (board, index)
@@ -49,6 +48,14 @@ def position_taken? (board, index)
     return false
   else
     return true
+  end
+end
+
+def valid_move?(board, index)
+  if !position_taken?(board, index) && (index).between?(0,8)
+    return true
+  else 
+    return false
   end
 end
 

@@ -60,3 +60,37 @@ def valid_move?(board, index)
       return false
    end
 end
+
+#turn
+def turn(board)
+  puts "Please enter 1-9:"
+  #get the user input
+  user_input = gets.strip
+  #input to index
+  index = input_to_index(user_input)
+  token = current_player(board)
+
+#check for validation
+  if valid_move?(board,index)
+    puts 'valid move'
+    move(board, index, token)
+    display_board(board)
+   else
+    puts 'try again'
+    turn(board)
+  end
+  display_board(board)
+end
+
+def turn_count(board)
+   counter = 0
+   board.each do |spaces|
+      if spaces == "X" || spaces == "O"
+         counter += 1
+      end
+   end
+   counter
+end
+def current_player(board)
+   turn_count(board) % 2 == 0 ? "X" : "O"
+end

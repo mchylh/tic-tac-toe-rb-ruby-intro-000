@@ -24,7 +24,7 @@ def display_board
    puts separator
    puts row
  end
- 
+
 #prints arbitrary arrangements of the board
 def display_board(board)
   puts " #{board[0]} | #{board[1]} | #{board[2]} "
@@ -60,5 +60,3 @@ def valid_move?(board, index)
       return false
    end
 end
-
-

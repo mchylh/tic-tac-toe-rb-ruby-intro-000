@@ -48,6 +48,11 @@ def position_taken? (board, index)
   !(board[index].nil? || board[index] == " ")
 end
 
+#define current player
+def current_player(board)
+   turn_count(board) % 2 == 0 ? "X" : "O"
+end
+
 #turn
 def turn(board)
   puts "Please enter 1-9:"
@@ -55,34 +60,24 @@ def turn(board)
   user_input = gets.strip
   #input to index
   index = input_to_index(user_input)
-  token = current_player(board)
-
-#check for validation
-  if valid_move?(board,index)
-    puts 'valid move'
-    move(board, index, token)
+  #check for validation
+  if valid_move?(board, index)
+    player_move(board, index, current_player(board))
     display_board(board)
-   else
-    puts 'try again'
+  else
     turn(board)
   end
-  display_board(board)
 end
 
 #counts occupied positions
 def turn_count(board)
    counter = 0
-   board.each do |spaces|
+   board.each {|spaces|
       if spaces == "X" || spaces == "O"
          counter += 1
       end
-   end
+   }
    counter
-end
-
-#define current player
-def current_player(board)
-   turn_count(board) % 2 == 0 ? "X" : "O"
 end
 
 #winning combo

@@ -2,18 +2,11 @@
 
 require_relative '../lib/tic_tac_toe'
 
+
 board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
 
 puts "Welcome to Tic Tac Toe!"
-
 puts display_board(board)
 
-puts turn(board)
-puts turn(board)
-puts turn(board)
-puts turn(board)
-puts turn(board)
-puts turn(board)
-puts turn(board)
-puts turn(board)
-puts turn(board)
+# Make sure to execute #play below
+puts play(board)

@@ -61,6 +61,74 @@ def valid_move?(board, index)
    end
 end
 
+#turn.rb
+#build structure of the board
+puts board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+
+#display_board method
+def display_board
+   puts row = ["   " "|" "   " "|" "   "]
+   puts separator = "-----------"
+   puts row
+   puts separator
+   puts row
+ end
+
+#board and position
+def display_board(board)
+   puts " #{board[0]} | #{board[1]} | #{board[2]} "
+   puts "-----------"
+   puts " #{board[3]} | #{board[4]} | #{board[5]} "
+   puts "-----------"
+   puts " #{board[6]} | #{board[7]} | #{board[8]} "
+end
+
+#change player input in to integer
+def input_to_index(user_input)
+   user_input.to_i - 1
+end
+
+#move
+def move(board, index, player)
+   board[index] = player
+end
+
+#players taking turns
+def turn_count(board)
+  counter = 0
+  board.each do |space|
+    if space == "X" || space == "O"
+      counter +=1
+  end
+end
+return counter
+end
+
+#determine current player
+def current_player(board)
+  if turn_count(board)%2 ==0
+    current_player = "X"
+  else
+    current_player = "O"
+end
+return current_player
+end
+
+# code your valid_move? method here
+def valid_move?(board, index)
+   if index.between?(0,8) && !position_taken?(board, index)
+        puts "this is a valid move"
+      return true
+    else
+      return false
+   end
+end
+
+# re-define your #position_taken? method here, so that you can use it in the #valid_move? method above.
+def position_taken? (board, index)
+  !(board[index].nil? || board[index] == " ")
+end
+
 #turn
 def turn(board)
   puts "Please enter 1-9:"
@@ -80,100 +148,4 @@ def turn(board)
     turn(board)
   end
   display_board(board)
-end
-
-def turn_count(board)
-   counter = 0
-   board.each do |spaces|
-      if spaces == "X" || spaces == "O"
-         counter += 1
-      end
-   end
-   counter
-end
-
-#define current player
-def current_player(board)
-   turn_count(board) % 2 == 0 ? "X" : "O"
-end
-
-#winning combo
-def won?(board)
-    WIN_COMBINATIONS.each do |win_combination|
-      win_index_1 = win_combination[0]
-      win_index_2 = win_combination[1]
-      win_index_3 = win_combination[2]
-      position_1 = board[win_index_1] # value of board at win_index_1
-      position_2 = board[win_index_2] # value of board at win_index_2
-      position_3 = board[win_index_3] # value of board at win_index_3
-      if position_1 == position_2 && position_2 == position_3 && position_taken?(board, win_index_1)
-        return win_combination
-      end
-    end
-    return false
-end
-#position_1 == position_2 && position_2 == position_3 && position_taken?(board, win_index_1)
-#The above code means to return first element (position_1) & make sure the position is taken by X or O
-
-#define full board
-def full?(board)
-   board.all? {|i| i == "X" || i == "O"}
-end
-
-#draw method for tie game
-def draw?(board)
-   if !won?(board) && full?(board)
-     return true
-   elsif !won?(board) && !full?(board)
-     return false
-   else won?(board)
-     return false
-   end
-end
-
-#end game method if draw or won or full
-def over?(board)
-   if draw?(board) || won?(board) || full?(board)
-     return true
-   end
-end
-
-#determine the winner
-def winner(board)
-   if won?(board)
-      return board[won?(board)[0]]
-   end
-end
-
-def move(board, index, current_player = "X")
-  board[index] = current_player
-end
-
-def position_taken?(board, location)
-  board[location] != " " && board[location] != ""
-end
-
-def valid_move?(board, index)
-  index.between?(0,8) && !position_taken?(board, index)
-end
-
-def turn(board)
-  puts "Please enter 1-9:"
-  input = gets.strip
-  index = input_to_index(input)
-  if valid_move?(board, index)
-    move(board, index)
-    display_board(board)
-  else
-    turn(board)
-  end
-end
-
-# Define your play method below
-def play(board)
-   counter = 0
-   until counter == 9
-     turn(board)
-     counter += 1
-   end
 end

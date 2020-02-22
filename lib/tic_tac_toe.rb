@@ -109,27 +109,30 @@ end
 #position_1 == position_2 && position_2 == position_3 && position_taken?(board, win_index_1)
 #The above code means to return first element (position_1) & make sure the position is taken by X or O
 
-#define full board
 def full?(board)
-   board.all? {|i| i == "X" || i == "O"}
+  if board.any? {|index| index == nil || index == " "}
+    return false
+  else
+    return true
+  end
 end
 
-#draw method for tie game
 def draw?(board)
    if !won?(board) && full?(board)
      return true
-   elsif !full?(board) && !won?(board)
+   elsif!full?(board) && !won?(board)
      return false
    else won?(board)
      return false
    end
 end
 
-#end game method if draw or won or full
 def over?(board)
-   if draw?(board) || won?(board) || full?(board)
-     return true
-   end
+  if draw?(board) || won?(board) || full?(board) 
+    return true
+  else
+    return false
+  end
 end
 
 #determine the winner
